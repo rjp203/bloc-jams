@@ -30,6 +30,21 @@ var albumMarconi = {
   ]
 };
 
+var albumFloyd = {
+  title: 'Animals',
+  artist: 'Pink Floyd',
+  label: 'Columbia Records',
+  year: '1977',
+  albumArtUrl: 'assets/images/album_covers/animals.png',
+  songs: [
+    { title: 'Pigs on the Wing 1', duration: '1:25' },
+    { title: 'Dogs', duration: '17:03' },
+    { title: 'Pigs (Three Different Ones)', duration: '11:25'},
+    { title: 'Sheep', duration: '10:25' },
+    { title: 'Pigs on the Wing 2', duration: '1:23'}
+  ]
+};
+
 var createSongRow = function(songNumber, songName, songLength) {
   var template =
       '<tr class="album-view-song-item">'
@@ -68,3 +83,9 @@ var setCurrentAlbum = function(album) {
 window.onload = function() {
   setCurrentAlbum(albumPicasso);
 };
+
+document.getElementsByClassName("album-view container narrow").addEventListener("click", function() {
+  viewAlbum(albumMarconi, albumPicasso, albumFloyd);
+});
+
+
