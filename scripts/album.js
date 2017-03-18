@@ -32,7 +32,7 @@ var albumMarconi = {
 
 var createSongRow = function(songNumber, songName, songLength) {
   var template =
-      '<tr class="album-view-song-item">'
+    '<tr class="album-view-song-item">'
   + '  <td class="song-item-number">' + songNumber + '</td>'
   + '  <td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
   + '  <td class="song-item-title">' + songName + '</td>'
@@ -69,12 +69,12 @@ var setCurrentAlbum = function(album) {
 var findParentByClassName = function(element, targetClass)  {
   if (element)  {
     var currentParent = element.parentElement;
-    while (currentParent.className !== && currentParent.className !== null) {
+    while (currentParent.className !== targetClass && currentParent.className !== null) {
       currentParent = currentParent.parentElement;
     }
     return currentParent;
   }
-}
+};
 
 var getSongItem = function(element) {
   switch (element.className)  {
@@ -83,7 +83,7 @@ var getSongItem = function(element) {
     case 'ion-pause':
       return findParentByClassName(element, 'song-item-number');
     case 'album-view-song-item':
-      return element.qureySelector('.song-item-number');
+      return element.querySelector('.song-item-number');
     case 'song-item-title':
     case 'song-item-duration':
       return findParentByClassName(element, 'album-view-song-item').querySelector('.song-item-number');
@@ -94,20 +94,18 @@ var getSongItem = function(element) {
   }
 };
 
-var getSongItem = function
-
-var clickHandler = function(targetElement)  {
+var clickHandler = function(targetElement) {
 
   var songItem = getSongItem(targetElement);
 
-  if (currentlyPlayingSong === null)  {
+  if (currentlyPlayingSong === null) {
     songItem.innerHTML = pauseButtonTemplate;
     currentlyPlayingSong = songItem.getAttribute('data-song-number');
-  }
-  } else if (currentlyPlayingSong === songItem.getAttribute('data-song-number'))  {
+
+  } else if (currentlyPlayingSong === songItem.getAttribute('data-song-number')) {
     songItem.innerHTML = playButtonTemplate;
     currentlyPlayingSong = null;
-  }
+
   } else if (currentlyPlayingSong !== songItem.getAttribute('data-song-number')) {
     var currentlyPlayingSongElement = document.querySelector('[data-song-number="' + currentlyPlayingSong + '"]');
     currentlyPlayingSongElement.innerHTML = currentlyPlayingSongElement.getAttribute('data-song-number');
@@ -127,21 +125,19 @@ var currentlyPlayingSong = null;
 window.onload = function() {
   setCurrentAlbum(albumPicasso);
 
-  songListContainer.addEventListener('mouseover', function(event)  {
-    console.log(event.target);
-
-    if (event.target.parentElement.className === 'album-view-song-item')  {
+  songListContainer.addEventListener('mouseover', function(event) {
+    if (event.target.parentElement.className === 'album-view-song-item') {
       event.target.parentElement.querySelector('.song-item-number').innerHTML = playButtonTemplate;
     }
   });
 
   for (var i = 0; i < songRows.length; i++) {
-    songRows[i].addEventListener('mouseleave', function(event)  {
-
+    songRows[i].addEventListener('mouseleave', function(event) {
       var songItem = getSongItem(event.target);
       var songItemNumber = songItem.getAttribute('data-song-number');
 
-      if (songItemNumber !== currentlyPlayingSong)  {
+      // #2
+      if (songItemNumber !== currentlyPlayingSong) {
         songItem.innerHTML = songItemNumber;
       }
     });
@@ -150,4 +146,4 @@ window.onload = function() {
       clickHandler(event.target);
     });
   }
-};
+}
