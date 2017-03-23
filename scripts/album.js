@@ -33,7 +33,6 @@ var albumMarconi = {
 var createSongRow = function(songNumber, songName, songLength) {
   var template =
     '<tr class="album-view-song-item">'
-  + '  <td class="song-item-number">' + songNumber + '</td>'
   + '  <td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
   + '  <td class="song-item-title">' + songName + '</td>'
   + '  <td class="song-item-duration">' + songLength + '</td>'
@@ -43,15 +42,19 @@ var createSongRow = function(songNumber, songName, songLength) {
   var $row = $(template);
 
   var clickHandler = function() {
+    var songNumber = $(this).attr('data-song-number');
+
     if (currentlyPlayingSong !== null) {
+      // Revert to song number for currently playing song because user started playing new song.
       var currentlyPlayingCell = $('.song-item-number[data-song-number="' + currentlyPlayingSong + '"]');
       currentlyPlayingCell.html(currentlyPlayingSong);
     }
     if (currentlyPlayingSong !== songNumber) {
+      // Switch from Play -> Pause button to indicate new song is playing.
       $(this).html(pauseButtonTemplate);
       currentlyPlayingSong = songNumber;
-
     } else if (currentlyPlayingSong === songNumber) {
+      // Switch from Pause -> Play button to pause currently playing song.
       $(this).html(playButtonTemplate);
       currentlyPlayingSong = null;
     }
@@ -82,11 +85,11 @@ var createSongRow = function(songNumber, songName, songLength) {
 
 var setCurrentAlbum = function(album) {
   // #1
-  var $albumTitle = $('album-view-title');
-  var $albumArtist = $('album-view-artist');
-  var $albumReleaseInfo = $('album-view-release-info');
-  var $albumImage = $('album-cover-art');
-  var $albumSongList = $('album-view-song-list');
+  var $albumTitle = $('.album-view-title');
+  var $albumArtist = $('.album-view-artist');
+  var $albumReleaseInfo = $('.album-view-release-info');
+  var $albumImage = $('.album-cover-art');
+  var $albumSongList = $('.album-view-song-list');
 
   // #2
   $albumTitle.text(album.title);
@@ -103,7 +106,6 @@ var setCurrentAlbum = function(album) {
     $albumSongList.append($newRow);
   }
 };
-
 
 var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
 var pauseButtonTemplate = '<a class="album-song-button"><span class="ion-pause"></span></a>';
