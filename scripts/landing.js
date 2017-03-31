@@ -6,10 +6,7 @@ var animatePoints = function()  {
       transform: 'scaleX(1) translateY(0)'
     });
   };
-  $.each)($('.point'), revealPoint);
-};
-
-var animatePoints = fuction(points)  {
+  $.each($('.point'), revealPoint);
 };
 
 $(window).load(function()  {
